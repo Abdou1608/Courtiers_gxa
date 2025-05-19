@@ -1,0 +1,8 @@
+<mat-card *ngIf="item">
+    <mat-card-title>{{ classify name }} Detail</mat-card-title>
+    <mat-card-content>
+      <div *ngFor="let key of objectKeys(item)">
+        <strong>{{ key }}:</strong> {{ item[key] }}
+      </div>
+    </mat-card-content>
+  </mat-card>

@@ -1,0 +1,75 @@
+@keyframes animatedGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #2196f3, #21cbf3, #1de9b6, #00e5ff);
+    background-size: 400% 400%;
+    animation: animatedGradient 12s ease infinite;
+  }
+  
+  .login-card {
+    width: 400px;
+    padding: 2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    background: white;
+  
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+    }
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-weight: bold;
+  }
+  .login-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, #2196f3, #21cbf3);
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .error-msg {
+    color: #e53935;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  

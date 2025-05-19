@@ -1,0 +1,50 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    height: 100vh;
+    background: linear-gradient(to right, #003c6c, #005a9e);
+    color: white;
+  
+    .welcome-card {
+      background: white;
+      color: #003c6c;
+      padding: 2rem;
+      max-width: 600px;
+      text-align: center;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease-in-out;
+  
+      h1 {
+        margin-bottom: 1rem;
+        font-size: 2rem;
+      }
+  
+      p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+  
+      .features {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem 1rem;
+        text-align: left;
+        margin-bottom: 2rem;
+  
+        mat-icon {
+          color: #005a9e;
+        }
+      }
+  
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  

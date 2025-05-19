@@ -1,0 +1,12 @@
+{
+    "$schema":  "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+      "generate-feature": {
+        "description": "Generate a full NgRx + UI feature",
+        "factory": "./generate-feature/index#generateFeature",
+        "schema": "./generate-feature/schema.json",
+        "aliases": ["gf"]
+      }
+    }
+  }
+  

@@ -1,0 +1,32 @@
+
+<div class="welcome-container" [@fadeIn]>
+  <mat-card class="welcome-card">
+    <h1>Bienvenue au Module Courtiers</h1>
+    <p>
+      Accédez à la plateforme dédiée aux partenaires courtiers de GXA Assurance.
+      Suivez vos ventes, consultez vos produits, et gérez vos commissions.
+    </p>
+
+    <div class="features">
+      <div class="feature-item">
+        <mat-icon>analytics</mat-icon>
+        <span>Suivi des performances en temps réel</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>verified_user</mat-icon>
+        <span>Accès sécurisé aux produits GXA</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>support_agent</mat-icon>
+        <span>Assistance dédiée aux courtiers</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="gotologin()">Se connecter</button>
+      <button mat-button color="accent" routerLink="/auth/register">Créer un compte</button>
+    </div>
+  </mat-card>
+</div>
+
+  

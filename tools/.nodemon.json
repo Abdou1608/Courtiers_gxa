@@ -1,0 +1,7 @@
+{
+    "watch": ["dist/server", "dist/browser"],
+    "ext": "js,ts,json",
+    "exec": "node main.js"
+  }
+ 
+  

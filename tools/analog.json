@@ -1,0 +1,28 @@
+{
+    "project": {
+      "name": "courtiers",
+      "type": "application",
+      "sourceRoot": "src"
+    },
+    "schematics": {
+      "@schematics/angular:component": {
+        "style": "scss",
+        "standalone": true,
+        "changeDetection": "OnPush",
+        "skipTests": true
+      },
+      "@schematics/angular:directive": {
+        "standalone": true
+      },
+      "@schematics/angular:pipe": {
+        "standalone": true
+      }
+    },
+    "vite": {
+      "buildTarget": "es2022",
+      "inlineStylesExtension": "scss",
+      "envPrefix": "VITE_",
+      "tsconfigPath": "./tsconfig.json"
+    }
+  }
+  

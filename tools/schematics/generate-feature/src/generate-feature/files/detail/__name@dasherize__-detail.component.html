@@ -1,0 +1,7 @@
+<mat-card *ngIf="selected()">
+    <h2>Détails de {{selected()?.name}}</h2>
+    <p>ID: {{selected()?.id}}</p>
+    <!-- Add more fields here -->
+    <button mat-raised-button routerLink="../">Retour</button>
+  </mat-card>
+  

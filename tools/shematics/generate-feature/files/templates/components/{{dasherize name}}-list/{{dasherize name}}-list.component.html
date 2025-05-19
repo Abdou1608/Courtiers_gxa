@@ -1,0 +1,25 @@
+<mat-card>
+    <mat-card-title>{{ classify name }} List</mat-card-title>
+    <mat-form-field class="full-width">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" [(ngModel)]="searchTerm" placeholder="Type to filter" />
+    </mat-form-field>
+  
+    <div class="table-container">
+      <table mat-table [dataSource]="filteredData()" class="mat-elevation-z8" matSort>
+        <!-- Dynamic Columns here -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="label">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Label</th>
+          <td mat-cell *matCellDef="let item">{{ item.label }}</td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" (dblclick)="goToDetail(row)"></tr>
+      </table>
+    </div>
+  </mat-card>

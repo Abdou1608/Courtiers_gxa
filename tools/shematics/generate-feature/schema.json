@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "generate-feature",
+  "title": "Generate Feature Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the feature."
+    },
+    "path": {
+      "type": "string",
+      "description": "The path to create the feature in.",
+      "default": "src/app/courtiers"
+    },
+    "model": {
+      "type": "string",
+      "description": "The path to the .model.ts file that defines the feature's data model."
+    },
+    "searchPagination": {
+  "type": "boolean",
+  "default": true,
+  "description": "Ajoute le support de la recherche + pagination dans ListComponent"
+},
+    "lazy": {
+      "type": "boolean",
+      "description": "Generate lazy-loaded route for the feature.",
+      "default": true
+    },
+    "standalone": {
+      "type": "boolean",
+      "description": "Use standalone component structure.",
+      "default": true
+    },
+    "material": {
+      "type": "boolean",
+      "description": "Include Angular Material UI components.",
+      "default": true
+    },
+    "signalStore": {
+      "type": "boolean",
+      "description": "Use signal-based NgRx store (Angular v19+).",
+      "default": true
+    },
+    "animations": {
+      "type": "boolean",
+      "description": "Include Angular animations setup.",
+      "default": true
+    },
+    "scss": {
+      "type": "boolean",
+      "description": "Generate SCSS files for components.",
+      "default": true
+    },
+    "facade": {
+      "type": "boolean",
+      "description": "Generate facade service for NgRx feature.",
+      "default": true
+    },
+    "selectors": {
+      "type": "boolean",
+      "description": "Generate NgRx selectors file.",
+      "default": true
+    },
+    "service": {
+      "type": "boolean",
+      "description": "Generate CRUD Angular service for the feature.",
+      "default": true
+    }
+  },
+  "required": ["name", "model"]
+}
+
+  

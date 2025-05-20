@@ -1,4 +1,4 @@
-import { Observable, tap, map } from "rxjs";
+import { Observable, tap, map, catchError, throwError } from "rxjs";
 import { AppConfigService } from "../../Services/AppConfigService/app-config.service";
 import { BasAppInfo } from "../BasSoapObject/BasAppInfo";
 import { BasSecurityContext } from "../BasSoapObject/BasSecurityContext";
@@ -23,16 +23,14 @@ export class BasAuth {
     New_OpenSession(BasLogin: string, BasPassword: string, BasDomain?:string): Observable<BasSecurityContext> {
         const body = `<ns1:OpenSession><logon xsi:type="xsd:string">${BasLogin}</logon><password xsi:type="xsd:string">${BasPassword}</password><domain xsi:type="xsd:string">${BasDomain}</domain></ns1:OpenSession>`;
     
-        return this.BasSoapCLient.new_SoapRequest(this.appConfigService.GetURlAuthService(), body).pipe(
-            tap(result => {
-                console.log("Rettour de l'API du LOGIN Direct...." + result);
-                console.log("=================================================================");
-                console.log("Rettour de l'API du LOGIN avec JSON.stringify(...." + JSON.stringify(result));
-            }),
+        return this.BasSoapCLient.New_SoapRequest(this.appConfigService.GetURlAuthService(), body).pipe(
             map(result => {
                 const basSecurityContext = new BasSecurityContext();
                 basSecurityContext.LoadFromXml(result);
                 return basSecurityContext;
+            }),
+            catchError((error: Error) => {
+              return throwError(() => error);
             })
         );
     }

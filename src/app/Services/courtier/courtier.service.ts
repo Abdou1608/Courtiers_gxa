@@ -8,8 +8,8 @@ export class CourtierService {
 
   constructor(private http: HttpClient) {}
 
-  getDemandes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/courtiers/demandes`);
+  getDossiers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/courtiers/Dossiers`);
   }
 
   getProduits(): Observable<any[]> {

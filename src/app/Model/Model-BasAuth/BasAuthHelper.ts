@@ -4,8 +4,8 @@ import { BasSoapClient } from "../Model-BasSoapClient/BasSoapClient";
 import { SessionStorage } from "../Model-SessionStorage/SessionStorage";
 import { BasAuth } from "./BasAuth";
 import { AppConfigService } from "../../Services/AppConfigService/app-config.service";
-import { SecurityContext } from "@angular/core";
-import { map, Observable } from "rxjs";
+//import { SecurityContext } from "@angular/core";
+import { catchError, map, Observable, throwError } from "rxjs";
 
 export class AuthenticationHelper {
 
@@ -41,7 +41,9 @@ export class AuthenticationHelper {
        this.sessionStorage.SetContext(this.basSecurityContext);
        return this.basSecurityContext
      }
-     ) );
+     ),catchError((error: Error) => {
+      return throwError(() => error);
+    }) );
      }
   
     public async LogOut(): Promise<void>

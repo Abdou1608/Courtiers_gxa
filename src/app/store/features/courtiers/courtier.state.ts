@@ -1,5 +1,6 @@
 export interface CourtierState {
-    demandes: any[];
+    dossiers: any[];
+    contrats: any[];
     produits: any[];
     commissions: any[];
     loading: boolean;
@@ -7,7 +8,8 @@ export interface CourtierState {
   }
   
   export const initialCourtierState: CourtierState = {
-    demandes: [],
+    dossiers: [],
+    contrats: [],
     produits: [],
     commissions: [],
     loading: false,

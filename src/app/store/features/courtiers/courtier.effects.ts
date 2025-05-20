@@ -8,13 +8,13 @@ import { CourtierService } from '../../../Services/courtier/courtier.service';
 export class CourtierEffects {
   constructor(private actions$: Actions, private courtierService: CourtierService) {}
 
-  loadDemandes$ = createEffect(() =>
+  loadDossiers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CourtierActions.loadDemandes),
+      ofType(CourtierActions.loadDossiers),
       mergeMap(() =>
-        this.courtierService.getDemandes().pipe(
-          map(demandes => CourtierActions.loadDemandesSuccess({ demandes })),
-          catchError(error => of(CourtierActions.loadDemandesFailure({ error })))
+        this.courtierService.getDossiers().pipe(
+          map(Dossiers => CourtierActions.loadDossiersSuccess({ Dossiers })),
+          catchError(error => of(CourtierActions.loadDossiersFailure({ error })))
         )
       )
     )

@@ -2,16 +2,18 @@ import { BasSecurityContext } from "../../../Model/BasSoapObject/BasSecurityCont
 import { User } from "../../../Model/user.model";
 
 export interface AuthState {
-    user: User | null;
+    user: User ;
     BasSec:BasSecurityContext | null;
     isAuthenticated: boolean;
     loading: boolean;
-    error: string | null;
+    error: any ;
   }
   export const initialAuthState: AuthState = {
-    user: null,
+    user: {
+      login: ""
+    },
     BasSec:null,
     isAuthenticated: false,
     loading: false,
-    error:""
+    error:null
   };

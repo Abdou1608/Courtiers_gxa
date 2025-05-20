@@ -2,7 +2,7 @@
     <mat-card class="login-card">
       <h2>Connexion à GXA</h2>
   
-      <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <form [formGroup]="this.loginForm" (ngSubmit)="submit()">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nom d'utilisateur</mat-label>
           <input matInput formControlName="username" />
@@ -18,25 +18,29 @@
           <input matInput formControlName="domain" />
         </mat-form-field>
   
-        <div *ngIf="error()" class="error-msg">
-          {{ error() }}
+        <div *ngIf="this.rawError()" class="error-msg mat-caption text-red-500">
+          {{ this.rawError() }}
         </div>
-  
+  <div><p> {{ this.loading$ | async }}</p></div>
+ 
         <button
           mat-raised-button
           color="primary"
           class="login-btn"
           type="submit"
-          [disabled]="loading()"
+          [disabled]="this.loading()"
      
         >
           Connexion
         </button>
       </form>
     </mat-card>
-  
-    <div *ngIf="loading()" class="spinner-overlay">
-      <mat-spinner></mat-spinner>
+        <!-- MatSpinner commented until it get solved
+  @if (this.loading$ | async) {
+    <div *ngIf="this.loading$ | async" class="spinner-overlay">
+      <mat-spinner *ngIf="this.loading$ | async"></mat-spinner>
     </div>
+  }
+  --> 
   </div>
   

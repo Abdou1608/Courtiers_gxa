@@ -4,13 +4,13 @@ import { CourtierState, initialCourtierState } from './courtier.state';
 
 export const courtierReducer = createReducer(
   initialCourtierState,
-  on(CourtierActions.loadDemandes, (state) => ({ ...state, loading: true, error: null })),
-  on(CourtierActions.loadDemandesSuccess, (state, { demandes }) => ({
+  on(CourtierActions.loadDossiers, (state) => ({ ...state, loading: true, error: null })),
+  on(CourtierActions.loadDossiersSuccess, (state, { Dossiers }) => ({
     ...state,
-    demandes,
+    Dossiers,
     loading: false
   })),
-  on(CourtierActions.loadDemandesFailure, (state, { error }) => ({
+  on(CourtierActions.loadDossiersFailure, (state, { error }) => ({
     ...state,
     error,
     loading: false

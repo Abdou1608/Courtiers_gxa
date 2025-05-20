@@ -182,7 +182,7 @@ export class CourtiersLayoutComponent implements OnDestroy {
 
   isDesktop$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
-    .pipe(map(result => result.matches));
+    .pipe(map(result => result?.matches));
 
   constructor() {
     // Ferme le drawer automatiquement en navigation (mode mobile uniquement)

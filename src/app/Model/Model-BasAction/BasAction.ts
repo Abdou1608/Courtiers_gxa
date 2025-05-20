@@ -74,7 +74,8 @@ export class BasAction {
     public parseToJsonobj(xmlString: string, tag:string): any {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-      
+        console.log("NONParsed Datas.....:"+xmlString)
+      console.log("Parsed Datas.....:"+JSON.stringify(xmlDoc))
         // ✅ Trouve automatiquement la balise de données : <data>...</data>
         const dataElement = xmlDoc.getElementsByTagName(tag)[0];
         if (!dataElement) return {};

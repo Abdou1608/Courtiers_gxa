@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
-import { BasSecurityContext } from '../../Model/BasSoapObject/BasSecurityContext';
+//import { AuthService } from '../auth/auth.service';
+//import { BasSecurityContext } from '../../Model/BasSoapObject/BasSecurityContext';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +11,7 @@ export class AppConfigService {
 
   private _baseUrl: string = "ec2-15-188-63-136.eu-west-3.compute.amazonaws.com";
 private _sec:any =null
-public set_sec() {
-  this._sec = this.authsrv.get_secutycontext()
-}
-public get sec(){
- return this._sec 
-}
+
   public set baseUrl(value: string) {
     this._baseUrl = value;
   }
@@ -47,9 +42,7 @@ public get sec(){
   private authService: string = "IBasAuthService";
   private b4WService: string = "IBas4WebService";
 
-  constructor(private http: HttpClient,private authsrv:AuthService) {
-
-    this.set_sec()
+  constructor(private http: HttpClient,) {
    }
 
   public load(): Promise<any> {

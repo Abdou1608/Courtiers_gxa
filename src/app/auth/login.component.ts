@@ -15,6 +15,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthState } from '../store/features/auth/auth.state';
+import * as AuthSelectors from '../store/features/auth/auth.selectors'; // import selectors
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -50,33 +52,33 @@ export class LoginComponent {
     //inject<Store<AppState>>(Store);
   private fb = inject(FormBuilder);
   private router = inject(Router);
-
+  public loading$!: Observable<Boolean>;
   loginForm = this.fb.group({
-    username: ['Supervi', Validators.required],
-    password: ['fsdfsdf', Validators.required],
-    domain: ['dfsdfsfs', Validators.required]
+    username: ['Maintech', Validators.required],
+    password: ['maintech', Validators.required],
+    domain: ['Maintech', Validators.required]
   });
   constructor() {
     
-    effect(() => {if (this.isAuthenticated()) {
-       this.router.navigate(['courtiers']);}});
+    //effect(() => {if (this.isAuthenticated()) {
+     //  this.router.navigate(['courtiers']);}});
+    this.loading$=this.store.select(AuthSelectors.selectAuthLoading)
+       
   }
 
-  loading = toSignal(this.store.pipe(select(state => state?.loading)), { initialValue: true });
-  error = toSignal(this.store.pipe(select(state => {
-    const e = state?.error;
-   // if(!e){return "Une erreur est survenue error non definit. Veuillez réessayer."}
-    return e ? typeof e === 'string' ? e : 'Une erreur est survenue. Veuillez réessayer.' : '';
-  })), { initialValue: '' });
-  isAuthenticated = toSignal(this.store.pipe(select(state => state?.isAuthenticated ?? false)), { initialValue: false });
-
+  
+  public loading= toSignal(this.store.select(AuthSelectors.selectAuthLoading), { initialValue: false });
+  public rawError = toSignal(this.store.select(AuthSelectors.selectAuthError), { initialValue: null });
+ public isAuthenticated = toSignal(this.store.select(AuthSelectors.selectIsAuthenticated), { initialValue: false });
   submit(): void {
     console.log("In SUBMIT befor If !!!!this.loginForm.invalid==="+this.loginForm.invalid)
    
     if (this.loginForm.invalid) return;
     const { username, password, domain } = this.loginForm.value;
-    console.log("User !!!!==="+username)
-    console.log("passs !!!!==="+password)
+    //console.log("User !!!!==="+username)
+   // console.log("passs !!!!==="+password)
+   //this.store.dispatch(AuthActions.loginStart());
+
     this.store.dispatch(AuthActions.login({ username: username!, password: password! , domain:domain!}));
   }
 

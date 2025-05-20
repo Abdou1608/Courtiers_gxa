@@ -1,11 +1,11 @@
 // src/app/models/user.model.ts
 export interface User {
-    dossier: number;
+    dossier?: number;
     login: string;
-    role: number;
-    rsociale: string;
+    role?: number;
+    rsociale?: string;
     portef?: string;
-    email: string;
-    ordreext: number;
+    email?: string;
+    ordreext?: number;
   }
   

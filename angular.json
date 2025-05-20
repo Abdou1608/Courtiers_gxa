@@ -15,6 +15,7 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [],
+            "optimization": false,
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [ "node_modules/@angular/material/prebuilt-themes/azure-blue.css",
@@ -23,13 +24,13 @@
           },
           "configurations": {
             "production": {
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": false
             }
           }
         },

@@ -1,6 +1,6 @@
 import { Component, HostBinding, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,9 +16,11 @@ import { trigger, style, transition, animate } from '@angular/animations';
   styleUrls: ['./welcome.component.scss'],
   imports: [
     CommonModule,
+    RouterModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    
   ],
   animations: [
     trigger('fadeIn', [
@@ -39,7 +41,7 @@ handleEnter(event: KeyboardEvent) {
   constructor(){}
   private router = inject(Router);
   gotologin(){
-this.router.navigate(["/login"])
+this.router.navigate(["login"])
 console.log("Navigate to Login")
   }
   noop(): void {

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
 import { slideFadeAnimation } from './shared/animations/route-animations';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
 
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterModule],
   standalone:true,
   animations: [slideFadeAnimation],
   templateUrl: './app.component.html',

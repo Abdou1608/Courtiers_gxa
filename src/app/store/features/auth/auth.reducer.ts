@@ -18,6 +18,10 @@ export const authReducer = createReducer(
     user:user,
     loading: false,
   })),
+  on(AuthActions.UpdateProf, (state) => ({ ...state, loading: true})),
+  on(AuthActions.UpdateProfSucces, (state, { user }) => ({ ...state,user , loading: false})),
+
+ 
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
     loading: false,
@@ -31,5 +35,14 @@ export const authReducer = createReducer(
     loading: false,
     error: typeof error === 'string' ? error : error?.message || 'Erreur inconnue de chargement du profil utilisateur, reesayez',
     isAuthenticated: false
-  }))
+  })),
+  on(AuthActions.UpdateProfFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error: typeof error === 'string' ? error : error?.message || 'Erreur inconnue de chargement du profil utilisateur, reesayez'
+  })),
+  on(AuthActions.logout, (state) => ({ ...state, loading: false, BasSec:null, user:{
+    numtiers: 0,
+    ordreext: 0
+  }, isAuthenticated:false})),
 );

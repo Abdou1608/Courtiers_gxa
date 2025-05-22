@@ -5,7 +5,7 @@ import { SessionStorage } from "../Model-SessionStorage/SessionStorage";
 import { BasAuth } from "./BasAuth";
 import { AppConfigService } from "../../Services/AppConfigService/app-config.service";
 //import { SecurityContext } from "@angular/core";
-import { catchError, map, Observable, throwError } from "rxjs";
+import { catchError, map, Observable, of, tap, throwError } from "rxjs";
 
 export class AuthenticationHelper {
 
@@ -46,13 +46,16 @@ export class AuthenticationHelper {
     }) );
      }
   
-    public async LogOut(): Promise<void>
+    public LogOut(): Observable<void>
     {
       let basSecurityContext: BasSecurityContext = this.sessionStorage.GetContext();
       if (basSecurityContext.GetSessionId() != undefined && basSecurityContext.GetSessionId() != null && basSecurityContext.GetSessionId() != "" && basSecurityContext.GetSessionId() != "null") {
-        await this.basAuth.CloseSession(basSecurityContext);
+        return this.basAuth.CloseSession(basSecurityContext).pipe(
+          tap(()=> this.sessionStorage.Clear())
+        );
       }
-      this.sessionStorage.Clear();
+      return of()
+      
     }
   
     //Method For Restoring the token values to session storage service — — -//

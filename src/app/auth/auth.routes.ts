@@ -1,4 +1,4 @@
-import { provideRouter, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { LoginComponent } from './login.component';
@@ -14,8 +14,9 @@ export const authRoutes: Routes = [
       provideState('auth', authReducer),
       provideEffects(AuthEffects),
       provideAnimations(),
-      
+  
     ],
-    component: LoginComponent
+   // component:LoginComponent
+    loadComponent: () => import('./login.component').then(m => m.LoginComponent) 
   }
 ];

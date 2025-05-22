@@ -10,6 +10,7 @@ import { User } from '../../../Model/user.model';
 //import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Xtlog } from '../../../Model/xtlog.model';
 
 
 
@@ -52,7 +53,7 @@ export class AuthEffects {
       ofType(AuthActions.GetProf),
       switchMap(({ username,  domain }) =>
         this.authService.getUserProfile(username,  domain).pipe(
-          map((user:User) =>
+          map((user:Xtlog) =>
             { 
               console.log("FROM EFFECT After .... this.authService.login "+JSON.stringify(user))
               return AuthActions.GetProfSuccess({ user })
@@ -82,7 +83,7 @@ export class AuthEffects {
       () =>
         this.actions$.pipe(
           ofType(AuthActions.GetProfSuccess),
-          tap(() => this.router.navigate(['courtiers']))
+         // tap(() => this.router.navigate(['courtiers']))
         ),
       { dispatch: false }
     )
@@ -106,8 +107,9 @@ export class AuthEffects {
       () =>
         this.actions$.pipe(
           ofType(AuthActions.logout),
+          map(() => this.authService.logout()),
           tap(() => {
-            this.router.navigate(['/login']);
+            this.router.navigate(['login']);
             this.snackBar.open('Déconnexion réussie.', 'Fermer', {
               duration: 3000,
               panelClass: ['mat-toolbar', 'mat-accent'],

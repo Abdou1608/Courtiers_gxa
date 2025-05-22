@@ -1,0 +1,40 @@
+.layout-container {
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 240px;
+    background: #003c6c;
+    color: white;
+  }
+
+  .logo-bar {
+    font-weight: bold;
+    color: white;
+  }
+
+  .content {
+    padding: 1rem;
+    background: #f5f5f5;
+    min-height: calc(100vh - 64px - 40px);
+  }
+
+  .mobile-toolbar {
+    display: flex;
+    align-items: center;
+  }
+
+  .active-link {
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+  }
+
+  .desktop-header {
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    .desktop-header {
+      display: none;
+    }
+  }

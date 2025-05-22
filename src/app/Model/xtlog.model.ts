@@ -1,9 +1,9 @@
-export interface Xtlog {
+export class Xtlog  {
     /** N° de tiers */
-    numtiers: number;
+    numtiers!: number;
   
     /** N° d'ordre extension */
-    ordreext: number;
+    ordreext!: number;
   
     /** Site concerné */
     site?: string;

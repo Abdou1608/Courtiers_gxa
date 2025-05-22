@@ -1,8 +1,9 @@
 import { BasSecurityContext } from "../../../Model/BasSoapObject/BasSecurityContext";
 import { User } from "../../../Model/user.model";
+import { Xtlog } from "../../../Model/xtlog.model";
 
 export interface AuthState {
-    user: User ;
+    user: Xtlog ;
     BasSec:BasSecurityContext | null;
     isAuthenticated: boolean;
     loading: boolean;
@@ -10,7 +11,8 @@ export interface AuthState {
   }
   export const initialAuthState: AuthState = {
     user: {
-      login: ""
+      numtiers: 0,
+      ordreext: 0
     },
     BasSec:null,
     isAuthenticated: false,

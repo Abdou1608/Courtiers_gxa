@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {  Injectable } from '@angular/core';
 import { of, map } from 'rxjs';
 import { BasParams } from '../Model/BasSoapObject/BasParams';
 import { BasAction } from '../Model/Model-BasAction/BasAction';
@@ -11,6 +11,7 @@ import { AppConfigService } from './AppConfigService/app-config.service';
 import { produitTagMap } from '../Model/produit.model';
 import { SessionStorage } from '../Model/Model-SessionStorage/SessionStorage';
 import { xtlogTagMap,Xtlog } from '../Model/xtlog.model';
+import { SoapParserService } from './soap-parser.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ import { xtlogTagMap,Xtlog } from '../Model/xtlog.model';
 export class DataAccessService {
   private sessionStorage: SessionStorage;
   private _basAction: BasAction;
-  constructor(private http: HttpClient,private basSoapClient: BasSoapClient,  private appConfigService: AppConfigService ) {
+  constructor( private SoapParser:SoapParserService,
+    private http: HttpClient,private basSoapClient: BasSoapClient,  private appConfigService: AppConfigService ) {
     this.sessionStorage = new SessionStorage();
    // this.isLoading$=of(false)
      this._basAction = new BasAction(this.basSoapClient, this.http, this.appConfigService);
@@ -37,7 +39,7 @@ public getall(entity:string){
 
 }
 public getbyID(entity:string, id:number){ 
-  let actionName: string =this.getActionNameID(entity+'_getall')?.name?? "getall" ;
+  let actionName: string =this.getActionNameID(entity+'_get')?.name?? "get" ;
  const field =this.getActionNameID(entity+'_getall')?.id?? "id"
   let basParams = new BasParams();
   basParams.AddInt(field,id)
@@ -64,19 +66,21 @@ public update(entity:string, id:number, data:any){
     let basParams = new BasParams();
     basParams.AddStr('login', username);
     basParams.AddStr('domain', domain);
-    return this._basAction.New_RunAction(actionName, basParams, this.sessionStorage.GetContext()).pipe(map(async res=>{
-     
-        return this.parseSoapXmlToJson<Xtlog>(res)
+    return this._basAction.New_RunAction(actionName, basParams, this.sessionStorage.GetContext()).pipe(map(res=>{
+    // console.log("RESULTA DE LAPI......"+res)
+      //  return this.SoapParser.mapParsedXmlToInterface<Xtlog>(this.SoapParser.parseSoapXmlToJson(res),Xtlog)
+        return this.SoapParser.parseSoapXmlToJson<Xtlog>(res)
     
     }))
   }
 
   public getActionNameID(entity:string){
     switch(entity){
-       case "tiergetall": return {name:"tiergetall", id:"numtier" };
-       case "tierget": return {name:"tiergetall", id:"numtier" };
-       case "tiercreate": return {name:"tiergetall", id:"numtier" };
-       case "tierupdate": return {name:"tiergetall", id:"numtier" };
+       case "tiergetall": return {name:"Tiers_Search", id:"reference" };
+       case "tiersherch": return {name:"Tiers_Search", id:"reference" };
+       case "tierget": return {name:"Tiers_ViewCard", id:"numtier" };
+       case "tiercreate": return {name:"Tiers_create", id:"" };
+       case "tierupdate": return {name:"Tiers_update", id:"numtiers" };
        case "projectgetall": return {name:"tiergetall", id:"numtier" };
        case "projectget": return {name:"tiergetall", id:"numtier" };
        case "projectcreate": return {name:"tiergetall", id:"numtier" };
@@ -140,12 +144,12 @@ public update(entity:string, id:number, data:any){
         const doc = parser.parseFromString(soapXml, 'application/xml');
     
         const dataNode = doc.querySelector('Data');
-        console.log('<Data>  dans la réponse SOAP......='+dataNode)
+       // console.log('<Data>  dans la réponse SOAP......='+dataNode)
         if (!dataNode) throw new Error('<Data> introuvable dans la réponse SOAP');
     
         const innerXml = new DOMParser().parseFromString(dataNode.textContent || '', 'application/xml');
         const params = innerXml.querySelectorAll('param');
-        console.log('<innerXml>  dans la réponse SOAP......='+innerXml)
+       // console.log('<innerXml>  dans la réponse SOAP......='+innerXml)
         console.log('<params>  dans la réponse SOAP......='+params)
         const result: Record<string, any> = {};
     
@@ -164,11 +168,12 @@ public update(entity:string, id:number, data:any){
           } else if (type === 'ptInt' && intVal !== null) {
             result[name] = parseInt(intVal, 10);
           } else {
-            result[name] = param.textContent ?? '';
+            result[name] = param.textContent;
           }
         });
-    
-        return result as T;
+        const res=result.pipe(map((r:any) =>  r["__zone_symbol__value"] ?? r))
+        //["__zone_symbol__value"]
+        return res as T;
       }
     
     

@@ -35,10 +35,12 @@ export class BasAuth {
         );
     }
 
-    async CloseSession(basSecurityContext: BasSecurityContext): Promise<void> {
+    CloseSession(basSecurityContext: BasSecurityContext): Observable<void> {
         let body = "<ns1:CloseSession>" + basSecurityContext.ToSoapVar() + "</ns1:CloseSession>";
-         await this.BasSoapCLient.SoapVoidRequest(this.appConfigService.GetURlAuthService(), body);
-        basSecurityContext.Clean();
+         return this.BasSoapCLient.SoapVoidRequest(this.appConfigService.GetURlAuthService(), body).pipe(
+            tap(() =>        basSecurityContext.Clean() )
+         );
+;
     }
 
     async CheckSession(basSecurityContext: BasSecurityContext): Promise<boolean> {

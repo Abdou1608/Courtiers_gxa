@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
-import { catchError, firstValueFrom, map, Observable, retry, throwError, timeout } from 'rxjs';
+import { catchError, defer, firstValueFrom, map, Observable, retry, switchMap, throwError, timeout } from 'rxjs';
 import { BasSoapFault } from "../BasSoapObject/BasSoapFault";
 
 export interface SoapFaultError {
@@ -71,29 +71,36 @@ export class BasSoapClient {
         }
     }
 
-    async SoapVoidRequest(url: string, request: string): Promise<void> {
-        if (this.HeaderAndFooterLoaded()) {
+    SoapVoidRequest(url: string, request: string): Observable<void> {
+        return defer(() => {
+          // Vérifie le header/footer et les recharge si besoin
+          if (this.HeaderAndFooterLoaded()) {
             this.LoadHeaderAndFooter();
-        }
-        let soapenv: string = this.SoapHeader + request + this.SoapFooter;
-        try {
-            const response = await firstValueFrom(this.http.post(url, soapenv, {
-                headers: new HttpHeaders(),
-                responseType: 'text',
-                observe: 'response',
-            }));
-            if (response.status === 200) {
-                if (response.body !== null) {
-                    if (BasSoapFault.IsBasError(response.body)) {
-                        BasSoapFault.ThrowError(response.body);
-                    }
+          }
+      
+          const soapenv: string = this.SoapHeader + request + this.SoapFooter;
+      
+          return this.http.post(url, soapenv, {
+            headers: new HttpHeaders(),
+            responseType: 'text',
+            observe: 'response',
+          }).pipe(
+            switchMap((response: HttpResponse<string>) => {
+              if (response.status === 200 && response.body !== null) {
+                if (BasSoapFault.IsBasError(response.body)) {
+                  return throwError(() => BasSoapFault.ThrowError(response.body ? response.body : "Erreur Inconnue Reessayez"));
                 }
-            }
-        }
-        catch (error: any) {
-            throw error;
-        }
-    }
+              }
+              return new Observable<void>((observer) => {
+                observer.next();
+                observer.complete();
+              });
+            }),
+            catchError((error) => {
+              return throwError(() => error);
+            })
+          );
+        }) }
     /*
    new_SoapRequest(url: string, request: string): Observable<string> {
         if (this.HeaderAndFooterLoaded()) {

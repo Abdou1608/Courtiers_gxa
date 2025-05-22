@@ -2,18 +2,21 @@ import { provideRouter, Routes, withDebugTracing, withRouterConfig } from '@angu
 import { authRoutes } from './auth/auth.routes';
 
 export const appRoutes: Routes = [
+
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+    { path: 'welcome', 
+    loadComponent: () => import('./welcome/welcome.component').then(m => m.WelcomeComponent)
+  },
   {
-    path: 'login',
+    path: 'login',  pathMatch: 'full',
     
-    loadChildren: () => import('./auth/auth.routes').then(m => m.authRoutes)
+    loadChildren: () => import('./auth/auth.routes').then(m => m.authRoutes),
+   
   },
     {
-      path: 'courtiers',
+      path: 'courtiers', 
       loadChildren: () => import('./courtiers/courtiers.routes').then(m => m.courtiersRoutes)
     },
    
-    {
-        path: '',
-        loadComponent: () => import('./welcome/welcome.component').then(m => m.WelcomeComponent)
-      }
+   
   ];

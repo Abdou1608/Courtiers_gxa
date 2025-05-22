@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { CourtiersLayoutComponent } from './courtiers-layout.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAppStore } from '../store/app-store.module';
 import { provideStore } from '@ngrx/store';
@@ -8,6 +7,7 @@ import { authReducer } from '../store/features/auth/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { CourtierEffects } from '../store/features/courtiers/courtier.effects';
 import { AuthEffects } from '../store/features/auth/auth.effects';
+import { CourtiersLayoutComponent } from './courtiers-layout.component';
 
 export const courtiersRoutes: Routes = [
     {
@@ -20,7 +20,7 @@ export const courtiersRoutes: Routes = [
             provideEffects(CourtierEffects,AuthEffects)
            ]
          },
-      //  { path: 'dashboard', loadComponent: () => import('./dashboard.component').then(m => m.DashboardComponent) },
+        { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
       //  { path: 'produits', loadComponent: () => import('./produits.component').then(m => m.ProduitsComponent) },
       //  { path: 'commissions', loadComponent: () => import('./commissions.component').then(m => m.CommissionsComponent) },
       //  { path: 'profile', loadComponent: () => import('./profile.component').then(m => m.ProfileComponent) }

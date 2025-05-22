@@ -2,8 +2,7 @@
 import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { select, Store } from '@ngrx/store';
-import { AppState } from '../store/app.state';
+
 import * as AuthActions from '../store/features/auth/auth.actions';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +16,7 @@ import { Router } from '@angular/router';
 import { AuthState } from '../store/features/auth/auth.state';
 import * as AuthSelectors from '../store/features/auth/auth.selectors'; // import selectors
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -30,7 +30,6 @@ import { Observable } from 'rxjs';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatCardModule,
-   
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -52,6 +51,7 @@ export class LoginComponent {
     //inject<Store<AppState>>(Store);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+
   public loading$!: Observable<Boolean>;
   loginForm = this.fb.group({
     username: ['Maintech', Validators.required],
@@ -60,8 +60,8 @@ export class LoginComponent {
   });
   constructor() {
     
-    //effect(() => {if (this.isAuthenticated()) {
-     //  this.router.navigate(['courtiers']);}});
+    effect(() => {if (this.isAuthenticated()) {
+       this.router.navigate(['/courtiers']);}});
     this.loading$=this.store.select(AuthSelectors.selectAuthLoading)
        
   }
@@ -86,4 +86,5 @@ export class LoginComponent {
   private humanizeError(error: any): string {
     return typeof error === 'string' ? error : 'Une erreur est survenue. Veuillez réessayer.';
   }
+  
 }

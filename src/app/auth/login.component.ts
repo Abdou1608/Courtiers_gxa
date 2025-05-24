@@ -1,9 +1,9 @@
 
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import * as AuthActions from '../store/features/auth/auth.actions';
+import * as AuthActions from '../core/store/auth/auth.actions';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,15 +13,17 @@ import { toSignal } from '@angular/core/rxjs-interop';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { Router } from '@angular/router';
-import { AuthState } from '../store/features/auth/auth.state';
-import * as AuthSelectors from '../store/features/auth/auth.selectors'; // import selectors
+
+import * as AuthSelectors from '../core/store/auth/auth.selectors'; // import selectors
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { AuthState } from '../core/store/auth/auth.state';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -51,8 +53,6 @@ export class LoginComponent {
     //inject<Store<AppState>>(Store);
   private fb = inject(FormBuilder);
   private router = inject(Router);
-
-  public loading$!: Observable<Boolean>;
   loginForm = this.fb.group({
     username: ['Maintech', Validators.required],
     password: ['maintech', Validators.required],
@@ -60,17 +60,20 @@ export class LoginComponent {
   });
   constructor() {
     
-    effect(() => {if (this.isAuthenticated()) {
-       this.router.navigate(['/courtiers']);}});
-    this.loading$=this.store.select(AuthSelectors.selectAuthLoading)
-       
+    effect(() => {if (this.isAuthenticated() && !this.loading()) {
+     // console.log("~###############In effect(() => {if (this.isAuthenticated())===")
+  
+       this.router.navigate(['dashboard']);}});
+  
   }
 
-  
+  loading$=this.store.select(AuthSelectors.selectAuthLoading)
+       
   public loading= toSignal(this.store.select(AuthSelectors.selectAuthLoading), { initialValue: false });
   public rawError = toSignal(this.store.select(AuthSelectors.selectAuthError), { initialValue: null });
  public isAuthenticated = toSignal(this.store.select(AuthSelectors.selectIsAuthenticated), { initialValue: false });
-  submit(): void {
+public profileLoading=toSignal(this.store.select(AuthSelectors.selectUserProfile), { initialValue: null });
+ submit(): void {
     console.log("In SUBMIT befor If !!!!this.loginForm.invalid==="+this.loginForm.invalid)
    
     if (this.loginForm.invalid) return;

@@ -1,0 +1,13 @@
+{
+    "extends": [
+      "plugin:@angular-eslint/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "@angular-eslint/component-selector": [
+        "error",
+        { "type": "element", "prefix": "app", "style": "kebab-case" }
+      ],
+      "prettier/prettier": ["error"]
+    }
+  }

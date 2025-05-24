@@ -1,0 +1,57 @@
+<mat-card>
+    <mat-card-header>
+        <p>
+            <h2>Profil Utilisateur</h2>
+        
+    </mat-card-header>
+  
+    <mat-card-content class="container-form">
+      <form [formGroup]="this.profileForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid form-fields" *ngIf="User() as user">
+          <mat-form-field appearance="outline">
+            <mat-label>Login</mat-label>
+            <input matInput formControlName="login" [disabled]="!isEditMode" />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" [disabled]="!isEditMode" />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Site</mat-label>
+            <input matInput formControlName="site" [disabled]="!isEditMode" />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Numéro de Tiers</mat-label>
+            <input matInput formControlName="numtiers" [disabled]="!isEditMode" />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Portefeuille</mat-label>
+            <input matInput formControlName="util" [disabled]="!isEditMode" />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Rôle</mat-label>
+            <input matInput formControlName="role" [disabled]="!isEditMode" />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Ordre Ext.</mat-label>
+            <input matInput formControlName="ordreext" [disabled]="!isEditMode" />
+          </mat-form-field>
+        </div>
+  
+        <mat-card-actions align="end">
+       <button *ngIf="!isEditMode" mat-stroked-button (click)="enableEdit()">Modifier</button>
+          <button *ngIf="isEditMode && profileForm.dirty" mat-raised-button color="primary" type="submit">
+            Enregistrer
+          </button>
+          <button mat-button (click)="closeProfileDialog()">Fermer</button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

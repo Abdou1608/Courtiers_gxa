@@ -1,0 +1,43 @@
+
+mat-card-content {
+    padding: 1rem;
+    min-width: 250px;
+    animation: fadeIn 0.3s ease-in;
+    height: auto;
+  }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .form-fields {
+    display: flex;
+    align-items: flex-start;
+  }
+  .container-form {
+    margin-bottom: 20px;
+    padding-bottom: 5%;
+  }
+  
+  .container-form > * {
+    margin: 12px 0;
+  }
+  
+
+.form-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-block: 16px;
+    columns: 2;
+    padding-bottom: 5%;
+  }
+  
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  

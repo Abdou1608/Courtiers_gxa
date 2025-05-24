@@ -1,6 +1,6 @@
-import { Component, HostBinding, HostListener, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,11 +12,11 @@ import { trigger, style, transition, animate } from '@angular/animations';
 @Component({
   selector: 'app-courtiers-welcome',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
   imports: [
     CommonModule,
-    RouterModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,

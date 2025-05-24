@@ -1,32 +1,29 @@
 import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom } from '@angular/core';
-import { provideRouter, withDebugTracing, withRouterConfig } from '@angular/router';
+import { provideRouter, withRouterConfig } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { appRoutes } from './app.routes';
-import { provideAppStore } from './store/app-store.module';
-import { authRoutes } from './auth/auth.routes';
-import { animation, AnimationFactory, useAnimation } from '@angular/animations';
-import { AnimationDriver } from '@angular/animations/animation_driver.d-DAiEDqQt';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { provideAppStore } from './core/store/app-store.module';
 
 
 export const appConfig: ApplicationConfig = {
   
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: false }),
+    provideZoneChangeDetection({ eventCoalescing: true }),
     importProvidersFrom(BrowserAnimationsModule),
     
-    //provideRouter(appRoutes),
+   //provideRouter(appRoutes),
     provideHttpClient(withFetch()),
-    provideStore(),
-    provideEffects(),
+    provideAppStore,
    
-   // provideAnimations(),
+    provideAnimations(),
  provideRouter(appRoutes,
-    withRouterConfig({paramsInheritanceStrategy: 'emptyOnly'})),
+  withRouterConfig({
+    onSameUrlNavigation: 'reload',
+    resolveNavigationPromiseOnError:true,
+    
+ })),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
    
     

@@ -5,7 +5,7 @@
     "courtiers": {
       "projectType": "application",
       "root": "",
-      "sourceRoot": "src", 
+      "sourceRoot": "src",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -16,8 +16,13 @@
             "polyfills": [],
             "optimization": false,
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -42,6 +47,15 @@
               "buildTarget": "courtiers:build:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
@@ -51,7 +65,10 @@
       "style": "scss"
     }
   },
-  "newProjectRoot": "gxa"
-
+  "newProjectRoot": "gxa",
+  "cli": {
+    "schematicCollections": [
+      "angular-eslint"
+    ]
+  }
 }
-

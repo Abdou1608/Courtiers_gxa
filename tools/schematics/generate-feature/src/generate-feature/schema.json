@@ -12,7 +12,7 @@
     "path": {
       "type": "string",
       "description": "The path to create the feature in.",
-      "default": "src/app/courtiers"
+      "default": "src/app/features"
     },
     "model": {
       "type": "string",

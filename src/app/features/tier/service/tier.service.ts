@@ -19,21 +19,21 @@ export class TierService {
     return this.da.getall(entity);
   }
 
-  getByID(id: number): Observable<Tier> {
+  getByID(numtiers: number): Observable<Tier> {
     const entity="Tier"
-    return this.da.getbyID(entity,id);  }
+    return this.da.getbyID(entity,numtiers);  }
 
   create(item: Tier): Observable<Tier> {
     const entity="Tier"
-    return this.da.create(entity,item.numtiers,item);
+    return this.da.create(entity,item);
   }
 
-  update(item: Tier, id:any): Observable<Tier> {
+  update(item: Tier, numtiers:any): Observable<Tier> {
     const entity="Tier"
-    return this.da.update(entity, id,item,)
+    return this.da.update(entity, numtiers,item,)
   }
 
-  delete(id: any): Observable<unknown> {
-    return this.da.getbyID('',id);
+  delete(numtiers: any): Observable<unknown> {
+    return this.da.getbyID('',numtiers);
   }
 }

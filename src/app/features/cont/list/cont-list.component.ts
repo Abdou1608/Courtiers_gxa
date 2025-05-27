@@ -1,5 +1,5 @@
 
-import { Component, computed, HostBinding, inject, signal } from '@angular/core';
+import { Component, HostBinding, Signal, signal,inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,10 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { TierFacade } from '../store/tier.Facade';
+import { ContFacade } from '../store/cont.Facade';
+import { FieldNamesPipe } from '../../../core/pipes/field-names.pipe';
+import { ContTagMap, Cont } from '../../../core/Model/cont.model';
 
 @Component({
-  selector: 'app-tier-list',
+  selector: 'app-cont-list',
   standalone: true,
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { TierFacade } from '../store/tier.Facade';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    FieldNamesPipe
   ],
   animations: [
     trigger('fadeIn', [
@@ -29,8 +32,8 @@ import { TierFacade } from '../store/tier.Facade';
       ])
     ])
   ],
-  styleUrls: ['./tier-list.component.scss'],
-  templateUrl: './tier-list.component.html',
+  styleUrls: ['./cont-list.component.scss'],
+  templateUrl: './cont-list.component.html',
   /*
   template: `
     <mat-card>
@@ -58,41 +61,50 @@ import { TierFacade } from '../store/tier.Facade';
   ]
     */
 })
-export class TierListComponent {
-
+export class ContListComponent {
     @HostBinding('@fadeIn') anim = true;
-    private facade = inject(TierFacade);
-   // readonly items = this.facade.all;
-   private dat =this.facade.all
-   readonly items = this.dat ; // Signal<Tier[]>
+    private facade = inject(ContFacade);
+    readonly items = this.facade.all;
+    readonly tagMap=ContTagMap
   columns = ['name'];
-  data = signal(this.items());
- // searchTerm = signal('');
+  data = signal(this.items) ?? [] ;
+  searchTerm = signal('');
+  displayedColumns=signal('');
+  readonly filtered = computed(() => {return this.filteredData()});
 
-  readonly searchTerm = signal('');
+  constructor(private router: Router) {
 
-  readonly filtered = computed(() => {
-    const list = this.items() ;
-    const term = this.searchTerm().toLowerCase();
-    return term ? list?.filter(t => t.rsociale?.toLowerCase().includes(term)) ?? [] : this.items() ? this.items():[];
-  });
-  displayedColumns=this.filtered
-  constructor(private router: Router) {}
+  }
 
   ngOnInit() {
     this.facade.loadAll();
   }
-
-  onRowClick(row: any) {
-    window.location.href = `/tier/${row.numtiers}`;
+  
+  onRowClick(row:Cont) {
+    this.facade.select_current(row)
+    this.router.navigate(['detail'])
+   // window.location.href = `/cont/${row.id}`;
   }
   onSearch(term: string) {
     this.searchTerm.set(term.toLowerCase());
   }
-
-
+  filteredData<T extends Record<string, any>>(): Cont[] {
+   let items = this.items()
+  let search=this.searchTerm()
+  if(search && search !== "" && items ){
+   const lowerSearch = search.toLowerCase();
+  
+    return items?.filter(item =>
+      Object.values(item).some(value =>
+        value !== null &&
+        value !== undefined &&
+        value.toString().toLowerCase().includes(lowerSearch)
+      )
+    );
+  } else { return items ?? []}
+  }
 
   goToDetail(row: { name: string }) {
-    this.router.navigate(['tier', row.name]);
+    this.router.navigate(['cont', row.name]);
   }
 }

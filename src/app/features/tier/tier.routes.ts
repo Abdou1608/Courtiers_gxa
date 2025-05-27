@@ -22,7 +22,7 @@ export const tierRoutes: Routes = [
          children: [
           { path: '',redirectTo:"list" },
            { path: 'list', component: TierListComponent },
-           { path: ':id', component: TierDetailComponent },
+           { path: ':numtiers', component: TierDetailComponent },
          ],
        },
      ];

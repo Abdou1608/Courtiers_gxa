@@ -5,7 +5,7 @@ export const select<%= classify(name) %>Feature = createFeatureSelector<<%= clas
 
 export const selectAll<%= classify(name) %>s = createSelector(
   select<%= classify(name) %>Feature,
-  state => state.items
+  state => state.data
 );
 
 export const select<%= classify(name) %>Loading = createSelector(

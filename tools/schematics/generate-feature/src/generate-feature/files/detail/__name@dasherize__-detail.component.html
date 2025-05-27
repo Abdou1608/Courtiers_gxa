@@ -1,7 +1,17 @@
-<mat-card *ngIf="selected()">
-    <h2>Détails de {{selected()?.name}}</h2>
-    <p>ID: {{selected()?.id}}</p>
-    <!-- Add more fields here -->
-    <button mat-raised-button routerLink="../">Retour</button>
+
+  <mat-card class="detail-card">
+    <mat-card-title>Détails</mat-card-title>
+    <mat-card-content>
+      <div class="detail-grid" *ngIf="let item as this.selected()">
+        <div class="detail-row" *ngFor="let key of [item] | fieldNames">
+          <div class="detail-label">{{ this.tagMap[key] ?? key }}</div>
+          <div class="detail-value">{{ item[key] }}</div>
+        </div>
+      </div>
+      <mat-card-action>
+      <button mat-raised-button routerLink="../">Retour</button>
+      </mat-card-action>
+    </mat-card-content>
   </mat-card>
+  
   

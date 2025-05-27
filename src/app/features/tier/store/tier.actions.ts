@@ -10,7 +10,7 @@ export const tierActions = createActionGroup({
     'Load Success': props<{ items: Tier[] }>(),
     'Load Failure': props<{ error: string }>(),
    
-    'Get': props<{ id: number }>(),
+    'Get': props<{ numtiers: number }>(),
     'Get Success': props<{ item: Tier }>(),
     'Get Failure': props<{ error: string }>(),
 
@@ -22,8 +22,8 @@ export const tierActions = createActionGroup({
     'Update Success': props<{ item: Tier }>(),
     'Update Failure': props<{ error: string }>(),
 
-    'Delete': props<{ id: number }>(),
-    'Delete Success': props<{ id: number }>(),
+    'Delete': props<{ numtiers: number }>(),
+    'Delete Success': props<{ numtiers: number }>(),
     'Delete Failure': props<{ error: string }>(),
   }
 });

@@ -21,17 +21,18 @@ import { TierFacade } from '../store/tier.Facade';
     templateUrl: './tier-detail.component.html'
   })
 export class TierDetailComponent {
-  public id:string
+  public id!: string;
+  numtiers: any;
   
   constructor(private route: ActivatedRoute) {
-    this.id! = this.route.snapshot.paramMap.get('id')?? "";
+    this.numtiers! = this.route.snapshot.paramMap.get('numtiers')?? "";
   }
 
   private facade = inject(TierFacade);
   readonly selected = this.facade.selected;
 
   ngOnInit() {
-    const id = parseInt(window.location.pathname.split('/').pop() || '0', 10);
-    if (id) this.facade.getById(id);
+    const numtiers = parseInt(window.location.pathname.split('/').pop() || '0', 10);
+    if (numtiers) this.facade.getById(numtiers);
   }
 }

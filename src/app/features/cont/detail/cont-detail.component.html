@@ -1,0 +1,18 @@
+
+  <mat-card class="detail-card">
+    <mat-card-title>Détails</mat-card-title>
+    <mat-card-content>
+      <div class="detail-grid" *ngIf="this.selected() as items ">
+      @if (items && items!== undefined) {
+        <div class="detail-row" *ngFor="let key of [items] | fieldNames">
+          <div class="detail-label">{{ this.tagMap[key]  }}</div>
+          <div class="detail-value">{{ items[key] }}</div>
+        </div>}
+      </div>
+      <mat-card-actions>
+      <button mat-raised-button routerLink="../">Retour</button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+  
+  

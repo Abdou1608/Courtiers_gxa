@@ -1,8 +1,9 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { <%= classify(name) %>Service } from '../../services/<%= dasherize(name) %>.service';
+import { <%= classify(name) %>Service } from '../service/<%= dasherize(name) %>.service';
 import { <%= camelize(name) %>Actions } from './<%= dasherize(name) %>.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
+import { <%= classify(name) %> } from '../../../core/Model/<%= dasherize(name) %>.model';
 
 export const <%= classify(name) %>Effects = {
   load: createEffect(() => {
@@ -22,8 +23,8 @@ export const <%= classify(name) %>Effects = {
     const service = inject(<%= classify(name) %>Service);
     return actions$.pipe(
       ofType(<%= camelize(name) %>Actions.get),
-      mergeMap(({ id }) => service.getById(id).pipe(
-        map(item => <%= camelize(name) %>Actions.getSuccess({ item })),
+      mergeMap(({<%= classify(name) %>}) => service.getByID(<%= classify(name) %>).pipe(
+        map((item:<%= camelize(name) %>) => <%= camelize(name) %>Actions.getSuccess({ item })),
         catchError(error => of(<%= camelize(name) %>Actions.getFailure({ error: error.message })))
       ))
     );
@@ -46,7 +47,7 @@ export const <%= classify(name) %>Effects = {
     const service = inject(<%= classify(name) %>Service);
     return actions$.pipe(
       ofType(<%= camelize(name) %>Actions.update),
-      mergeMap(({ item }) => service.update(item).pipe(
+      mergeMap(({ item,<%= classify(name) %> }) => service.update(item,<%= classify(name) %>).pipe(
         map(item => <%= camelize(name) %>Actions.updateSuccess({ item })),
         catchError(error => of(<%= camelize(name) %>Actions.updateFailure({ error: error.message })))
       ))
@@ -58,8 +59,8 @@ export const <%= classify(name) %>Effects = {
     const service = inject(<%= classify(name) %>Service);
     return actions$.pipe(
       ofType(<%= camelize(name) %>Actions.delete),
-      mergeMap(({ id }) => service.delete(id).pipe(
-        map(() => <%= camelize(name) %>Actions.deleteSuccess({ id })),
+      mergeMap(({<%= classify(name) %>}) => service.delete(<%= classify(name) %>).pipe(
+        map(() => <%= camelize(name) %>Actions.deleteSuccess({<%= classify(name) %>})),
         catchError(error => of(<%= camelize(name) %>Actions.deleteFailure({ error: error.message })))
       ))
     );

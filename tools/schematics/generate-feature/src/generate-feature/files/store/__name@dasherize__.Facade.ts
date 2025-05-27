@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { computed, signal } from '@angular/core';
+
 import { Store } from '@ngrx/store';
-import { <%= classify(name) %> } from '../<%= dasherize(name) %>.model';
+import { <%= classify(name) %> } from '../../../core/Model/<%= dasherize(name) %>.model';
 import { <%= camelize(name) %>Actions } from './<%= dasherize(name) %>.actions';
 import { selectAll<%= classify(name) %>s, select<%= classify(name) %>Loading, select<%= classify(name) %>Error, selectCurrent<%= classify(name) %> } from './<%= dasherize(name) %>.selectors';
 
@@ -18,19 +18,22 @@ export class <%= classify(name) %>Facade {
     this.store.dispatch(<%= camelize(name) %>Actions.load());
   }
 
-  getById(id: number) {
-    this.store.dispatch(<%= camelize(name) %>Actions.get({ id }));
+  getById(<%= classify(name) %>: number) {
+    this.store.dispatch(<%= camelize(name) %>Actions.get({ <%= classify(name) %> }));
   }
 
   create(item: <%= classify(name) %>) {
     this.store.dispatch(<%= camelize(name) %>Actions.create({ item }));
   }
 
-  update(item: <%= classify(name) %>) {
-    this.store.dispatch(<%= camelize(name) %>Actions.update({ item }));
+  update(item: <%= classify(name) %>, <%= classify(name) %>:any) {
+    this.store.dispatch(<%= camelize(name) %>Actions.update({ item, <%= classify(name) %> }));
   }
 
-  delete(id: number) {
-    this.store.dispatch(<%= camelize(name) %>Actions.delete({ id }));
+  delete(<%= classify(name) %>: any) {
+    this.store.dispatch(<%= camelize(name) %>Actions.delete({ <%= classify(name) %> }));
+  }
+  select_current(item:<%= classify(name) %>) {
+    this.store.dispatch(<%= camelize(name) %>Actions.Select_current_item({ item}));
   }
 }

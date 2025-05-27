@@ -21,8 +21,8 @@ export class TierFacade {
     this.store.dispatch(tierActions.load());
   }
 
-  getById(id: number) {
-    this.store.dispatch(tierActions.get({ id }));
+  getById(numtiers: number) {
+    this.store.dispatch(tierActions.get({ numtiers }));
   }
 
   create(item: Tier) {
@@ -33,7 +33,7 @@ export class TierFacade {
     this.store.dispatch(tierActions.update({ item }));
   }
 
-  delete(id: number) {
-    this.store.dispatch(tierActions.delete({ id }));
+  delete(numtiers: number) {
+    this.store.dispatch(tierActions.delete({ numtiers }));
   }
 }

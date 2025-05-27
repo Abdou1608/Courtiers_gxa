@@ -1,5 +1,5 @@
 
-import { Component, HostBinding, Signal, signal } from '@angular/core';
+import { Component, HostBinding, Signal, signal,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { <%= classify(name) %>Facade } from '../store/<%= dasherize(name) %>.Facade';
+import { FieldNamesPipe } from '../../../core/pipes/field-names.pipe';
+import { <%= classify(name) %>TagMap } from '../../../core/Model/<%= dasherize(name) %>.model';
 
 @Component({
   selector: 'app-<%= dasherize(name) %>-list',
@@ -18,7 +21,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    FieldNamesPipe
   ],
   animations: [
     trigger('fadeIn', [
@@ -61,25 +65,43 @@ export class <%= classify(name) %>ListComponent {
     @HostBinding('@fadeIn') anim = true;
     private facade = inject(<%= classify(name) %>Facade);
     readonly items = this.facade.all;
+    readonly tagMap=<%= classify(name) %>TagMap
   columns = ['name'];
-  data = signal(items);
+  data = signal(this.items);
   searchTerm = signal('');
+  displayedColumns=signal('');
+  readonly filtered = computed(() => {this.filteredData()});
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+
+  }
 
   ngOnInit() {
     this.facade.loadAll();
   }
-
-  onRowClick(row: any) {
-    window.location.href = `/<%= dasherize(name) %>/${row.id}`;
+  
+  onRowClick(row:<%= classify(name) %>) {
+    this.facade.select_current(row)
+    this.router.navigate(['detail'])
+   // window.location.href = `/<%= dasherize(name) %>/${row.id}`;
   }
   onSearch(term: string) {
     this.searchTerm.set(term.toLowerCase());
   }
-
-  filteredData(): { name: string }[] {
-    return this.data().filter(item => item.name.toLowerCase().includes(this.searchTerm()));
+  filteredData<T extends Record<string, any>>(): T[] {
+   let items = this.items()
+  let search=this.searchTerm()
+  if(search && search !== "" ){
+   const lowerSearch = search.toLowerCase();
+  
+    return items.filter(item =>
+      Object.values(item).some(value =>
+        value !== null &&
+        value !== undefined &&
+        value.toString().toLowerCase().includes(lowerSearch)
+      )
+    );
+  } else { return this.items()}
   }
 
   goToDetail(row: { name: string }) {

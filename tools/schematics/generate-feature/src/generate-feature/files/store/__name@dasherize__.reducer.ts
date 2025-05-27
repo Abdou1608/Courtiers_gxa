@@ -1,7 +1,7 @@
 // File: schematics/feature/files/__name@dasherize__/store/__name@dasherize__.reducer.ts
 import { createReducer, on } from '@ngrx/store';
 import { <%= camelize(name) %>Actions } from './<%= dasherize(name) %>.actions';
-import { <%= classify(name) %> } from '../../models/<%= dasherize(name) %>.model';
+import { <%= classify(name) %> } from '../../../core/Model/<%= dasherize(name) %>.model';
 
 export interface <%= classify(name) %>State {
   items: <%= classify(name) %>[];
@@ -34,18 +34,21 @@ export const <%= classify(name) %>Reducer = createReducer(
   on(<%= camelize(name) %>Actions.update, state => ({ ...state, loading: true })),
   on(<%= camelize(name) %>Actions.updateSuccess, (state, { item }) => ({
     ...state,
-    items: state.items.map(i => i.id === item.id ? item : i),
+    items: state.items.map(i => i.<%= classify(name) %> === item.<%= classify(name) %> ? item : i),
     loading: false
   })),
   on(<%= camelize(name) %>Actions.updateFailure, (state, { error }) => ({ ...state, error, loading: false })),
 
   on(<%= camelize(name) %>Actions.delete, state => ({ ...state, loading: true })),
-  on(<%= camelize(name) %>Actions.deleteSuccess, (state, { id }) => ({
+  on(<%= camelize(name) %>Actions.deleteSuccess, (state, { <%= classify(name) %> }) => ({
     ...state,
-    items: state.items.filter(i => i.id !== id),
+    items: state.items.filter(i => i.<%= classify(name) %> !== <%= classify(name) %>),
     loading: false
   })),
   on(<%= camelize(name) %>Actions.deleteFailure, (state, { error }) => ({ ...state, error, loading: false }))
 );
+on(<%= camelize(name) %>Actions.Select_current_item, (state, { item }) => ({ ...state, selected:item, }))
+);
+
 
 

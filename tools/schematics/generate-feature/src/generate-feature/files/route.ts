@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
 import { <%= classify(name) %>Component } from './index';
-import { <%= classify(name) %>ListComponent } from './list/<%= dasherize(name) %>-list.component.ts';
-import { <%= classify(name) %>BaseComponent } from './base/<%= dasherize(name) %>-base.component.ts';
-import { <%= classify(name) %>DetailComponent } from `./detail/<%= dasherize(name) %>-detail.component.ts`;
+import { <%= classify(name) %>ListComponent } from './list/<%= dasherize(name) %>-list.component';
+import { <%= classify(name) %>BaseComponent } from './base/<%= dasherize(name) %>-base.component';
+import { <%= classify(name) %>DetailComponent } from `./detail/<%= dasherize(name) %>-detail.component`;
 import { <%= classify(name) %>Reducer } from './store/<%= dasherize(name) %>.reducer';
 import { <%= classify(name) %>Effects } from './store/<%= dasherize(name) %>.effects';
 

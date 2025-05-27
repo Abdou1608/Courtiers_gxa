@@ -5,7 +5,7 @@ import { BasParams } from '../Model/BasSoapObject/BasParams';
 import { BasAction } from '../Model/Model-BasAction/BasAction';
 //import { AuthenticationHelper } from '../Model/Model-BasAuth/BasAuthHelper';
 import { BasSoapClient } from '../Model/Model-BasSoapClient/BasSoapClient';
-import { Tier, TierTagdMap } from '../Model/tier.model';
+import { Tier, TierTagMap } from '../Model/tier.model';
 import { AppConfigService } from './AppConfigService/app-config.service';
 //import { isEntityName } from 'typescript';
 import { produitTagMap } from '../Model/produit.model';
@@ -50,9 +50,9 @@ public getbyID(entity:string, id:number){
 }))
 
 }
-public create(entity:string, id:number, data:any){ 
+public create(entity:string, data:any){ 
   
-  return this.getbyID(entity,id)
+  return this.getbyID(entity,data.id)
 }
 
 public update(entity:string, id:number, data:any){ 
@@ -230,7 +230,7 @@ public update(entity:string, id:number, data:any){
       let tagmap:any
       switch(entity) {
         case "prod": return produitTagMap ;
-        case "tier": return TierTagdMap;
+        case "tier": return TierTagMap;
         case "xtlog": return xtlogTagMap;
         default:
           return{};

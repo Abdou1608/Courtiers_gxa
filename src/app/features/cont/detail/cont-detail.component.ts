@@ -4,14 +4,14 @@ import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { <%= classify(name) %>Facade } from '../store/<%= dasherize(name) %>.Facade';
+import { ContFacade } from '../store/cont.Facade';
 //import { constructor } from 'assert';
 //import { classify } from '../store/__name@dasherize__.state';
 import { FieldNamesPipe } from '../../../core/pipes/field-names.pipe';
-import { <%= classify(name) %>TagMap } from '../../../core/Model/<%= dasherize(name) %>.model';
+import { ContTagMap } from '../../../core/Model/cont.model';
 
 @Component({
-    selector: 'app-<%= dasherize(name) %>-detail',
+    selector: 'app-cont-detail',
     standalone: true,
     imports: [
       CommonModule,
@@ -21,18 +21,18 @@ import { <%= classify(name) %>TagMap } from '../../../core/Model/<%= dasherize(n
       FieldNamesPipe,
       RouterModule,
     ],
-    styleUrls: ['./<%= dasherize(name) %>-detail.component.scss'],
-    templateUrl: './<%= dasherize(name) %>-detail.component.html'
+    styleUrls: ['./cont-detail.component.scss'],
+    templateUrl: './cont-detail.component.html'
   })
-export class <%= classify(name) %>DetailComponent {
+export class ContDetailComponent {
   id:any 
-  const tagMap=<%= classify(name) %>TagMap
+ tagMap=ContTagMap
   constructor(private route: ActivatedRoute) {
 
    //this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  private facade = inject(<%= classify(name) %>Facade);
+  private facade = inject(ContFacade);
   readonly selected = this.facade.selected;
 
   ngOnInit() {

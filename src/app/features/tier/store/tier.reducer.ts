@@ -41,9 +41,9 @@ export const TierReducer = createReducer(
   on(tierActions.updateFailure, (state, { error }) => ({ ...state, error, loading: false })),
 
   on(tierActions.delete, state => ({ ...state, loading: true })),
-  on(tierActions.deleteSuccess, (state, { id }) => ({
+  on(tierActions.deleteSuccess, (state, { numtiers }) => ({
     ...state,
-    items: state.items.filter(i => i.numtiers !== id),
+    items: state.items.filter(i => i.numtiers !== numtiers),
     loading: false
   })),
   on(tierActions.deleteFailure, (state, { error }) => ({ ...state, error, loading: false }))

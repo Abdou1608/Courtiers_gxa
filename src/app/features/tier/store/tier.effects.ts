@@ -26,7 +26,7 @@ export class TierEffects {
 
     return this.actions$.pipe(
       ofType(tierActions.get),
-      mergeMap(({ id }) => this.service.getByID(id).pipe(
+      mergeMap(({ numtiers }) => this.service.getByID(numtiers).pipe(
         map(item => tierActions.getSuccess({ item })),
         catchError(error => of(tierActions.getFailure({ error: error.message })))
       ))
@@ -56,8 +56,8 @@ export class TierEffects {
   delete= createEffect(() => {
     return this.actions$.pipe(
       ofType(tierActions.delete),
-      mergeMap(({ id }) => this.service.delete(id).pipe(
-        map(() => tierActions.deleteSuccess({ id })),
+      mergeMap(({ numtiers }) => this.service.delete(numtiers).pipe(
+        map(() => tierActions.deleteSuccess({ numtiers })),
         catchError(error => of(tierActions.deleteFailure({ error: error.message })))
       ))
     )

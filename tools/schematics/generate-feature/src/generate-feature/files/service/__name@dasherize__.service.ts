@@ -1,10 +1,9 @@
 
 import { Observable } from 'rxjs';
-import { DataAccessService } from '../../../../../../../src/app/src/Services/data-access.service';
 import { classify } from '@angular-devkit/core/src/utils/strings';
-//import { DataAccessService } from '../../../../../../../src/app/Services/auth/auth.service';
+import { <%= classify(name) %> } from '../../../core/Model/<%= dasherize(name) %>.model';
+import { DataAccessService } from '../../../core/Services/data-access.service';
 
-%= classify(name) %> } from '../../../Model/<%= dasherize(name) %>.model';
 
 export class <%= classify(name) %>Service {
  constructor(private da:DataAccessService){
@@ -16,24 +15,24 @@ export class <%= classify(name) %>Service {
   private baseUrl = '/api/<%= dasherize(name) %>';
 
   getAll(): Observable<<%= classify(name) %>[]> {
-    const entity=<%= classify(name) %>
+    const entity='<%= dasherize(name) %>'
     return this.da.getall(entity);
   }
 
-  getByID(id: number): Observable<<%= classify(name) %>> {
-    const entity=<%= classify(name) %>
-    return this.da.getByID(entity,id);  }
+  getById>(num<%= classify(name) %>: number): Observable<<%= classify(name) %>> {
+    const entity='<%= dasherize(name) %>'
+    return this.da.getbyID>(entity,num<%= classify(name) %>);  }
 
   create(item: <%= classify(name) %>): Observable<<%= classify(name) %>> {
-    const entity=<%= classify(name) %>
+    const entity='<%= dasherize(name) %>'
     return this.da.create(entity,item);
   }
 
-  update(item: <%= classify(name) %>, id:sany): Observable<<%= classify(name) %>> {
-    return this.da.update(item, id)
+  update(item: <%= classify(name) %>, num<%= classify(name) %>:any): Observable<<%= classify(name) %>> {
+    return this.da.update(item, num<%= classify(name) %>)
   }
 
-  delete(id: any): Observable<unknown> {
-    return this.da.getById('',id);
+  delete(num<%= classify(name) %>: any): Observable<unknown> {
+    return this.da.getByID>('',num<%= classify(name) %>);
   }
 }

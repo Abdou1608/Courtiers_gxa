@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TierFacade } from '../store/tier.Facade';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tier-list',
@@ -19,7 +20,8 @@ import { TierFacade } from '../store/tier.Facade';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    FormsModule
   ],
   animations: [
     trigger('fadeIn', [
@@ -63,11 +65,11 @@ export class TierListComponent {
     @HostBinding('@fadeIn') anim = true;
     private facade = inject(TierFacade);
    // readonly items = this.facade.all;
-   private dat =this.facade.all
+   private dat =this.facade.current_shearch_items
    readonly items = this.dat ; // Signal<Tier[]>
   columns = ['name'];
   data = signal(this.items());
- // searchTerm = signal('');
+  searchValue = '';
 
   readonly searchTerm = signal('');
 
@@ -80,14 +82,17 @@ export class TierListComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.facade.loadAll();
+  //  this.facade.loadAll();
   }
 
   onRowClick(row: any) {
     window.location.href = `/tier/${row.numtiers}`;
   }
   onSearch(term: string) {
+    const reference=term
+    const dppname=term
     this.searchTerm.set(term.toLowerCase());
+    this.facade.shearch_items(reference,dppname)
   }
 
 

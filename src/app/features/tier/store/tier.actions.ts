@@ -13,6 +13,9 @@ export const tierActions = createActionGroup({
     'Get': props<{ numtiers: number }>(),
     'Get Success': props<{ item: Tier }>(),
     'Get Failure': props<{ error: string }>(),
+    'Shearch': props<{ reference: any, dppname:string }>(),
+    'Shearch Success': props<{current_search_items: Tier[]  }>(),
+    'Shearch Failure': props<{ error: string }>(),
 
     'Create': props<{ item: Tier }>(),
     'Create Success': props<{ item: Tier }>(),

@@ -27,6 +27,10 @@ export const TierReducer = createReducer(
   on(tierActions.get, state => ({ ...state, loading: true })),
   on(tierActions.getSuccess, (state, { item }) => ({ ...state, selected: item, loading: false })),
   on(tierActions.getFailure, (state, { error }) => ({ ...state, error, loading: false })),
+ 
+  on(tierActions.shearch, state => ({ ...state, loading: true })),
+  on(tierActions.shearchSuccess, (state, { current_search_items }) => ({ ...state, items: [...state.items, ...current_search_items], current_search_items })),
+  on(tierActions.shearchFailure, (state, { error }) => ({ ...state, error, loading: false })),
 
   on(tierActions.create, state => ({ ...state, loading: true })),
   on(tierActions.createSuccess, (state, { item }) => ({ ...state, items: [...state.items, item], loading: false })),

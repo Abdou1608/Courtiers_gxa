@@ -33,6 +33,17 @@ export class TierEffects {
     )
   })
 
+  Shearch= createEffect(() => {
+
+    return this.actions$.pipe(
+      ofType(tierActions.shearch),
+      mergeMap(({ reference,dppname }) => this.service.Shearch(reference,dppname).pipe(
+        map(items => tierActions.shearchSuccess({current_search_items: items })),
+        catchError(error => of(tierActions.getFailure({ error: error.message })))
+      ))
+    )
+  })
+
   create= createEffect(() => {
     return this.actions$.pipe(
       ofType(tierActions.create),

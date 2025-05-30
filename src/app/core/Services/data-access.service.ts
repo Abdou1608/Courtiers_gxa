@@ -47,9 +47,26 @@ public getbyID(entity:string, id:number){
     
     return this.SoapParser.parseSoapXmlToJson(res)
 
+}))};
+
+public Shearch_tier(reference:string, dppname:string){ 
+  let actionName: string ="Tiers_Search"
+  //this.getActionNameID(entity+'_get')?.name?? "get" ;
+// const field =this.getActionNameID(entity+'_getall')?.id?? "id"
+  let basParams = new BasParams();
+  basParams.AddStr("reference",reference)
+  basParams.AddStr("dppname",dppname)
+  return this._basAction.New_RunAction(actionName, basParams, this.sessionStorage.GetContext()).pipe(map(res=>{
+    console.log("Dans this._basAction.New_RunAction, Resultat .....:"+res)
+    console.log("Dans this._basAction.New_RunAction, Resultat de this.SoapParser.parseSoapXmlToJson(res) .....:"+JSON.stringify(this.SoapParser.parseSoapXmlToJson(res)))
+ 
+    return this.SoapParser.parseSoapXmlToJson(res)
+
 }))
 
-}
+
+
+
 public create(entity:string, data:any){ 
   
   return this.getbyID(entity,data.id)

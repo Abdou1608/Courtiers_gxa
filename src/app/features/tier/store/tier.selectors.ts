@@ -8,6 +8,11 @@ export const selectAllTiers = createSelector(
   state => state.items
 );
 
+export const selectcurrent_shearch_items = createSelector(
+  selectTierFeature,
+  state => state.current_shearch_items
+);
+
 export const selectTierLoading = createSelector(
   selectTierFeature,
   state => state.loading

@@ -1,7 +1,8 @@
 <mat-card>
     <mat-form-field appearance="fill">
       <mat-label>Search</mat-label>
-      <input matInput placeholder="Rechercher...">
+      <input matInput placeholder="Rechercher..."  [(ngModel)]="this.searchValue">
+      <button mat-button (click)="this.onSearch(this.searchValue)">Détails</button>
     </mat-form-field>
     <table mat-table [dataSource]="items()" class="mat-elevation-z8">
       <ng-container matColumnDef="numtiers">

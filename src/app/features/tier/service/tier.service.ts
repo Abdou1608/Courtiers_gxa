@@ -36,4 +36,7 @@ export class TierService {
   delete(numtiers: any): Observable<unknown> {
     return this.da.getbyID('',numtiers);
   }
+  Shearch(reference: any, dppname:string): Observable<Tier[]> {
+    const entity="Tier"
+    return this.da.Shearch_tier(reference,dppname);  }
 }
